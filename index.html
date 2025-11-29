@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IPA</title>
+    <meta name="description" content="Agar.io IPA List">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Agar.io IPA List">
+    <meta property="og:description" content="A collection of Agar.io iOS IPA files.">
+    <meta property="og:image" content="menuIcon.ico?v=1">
+    <meta property="og:site_name" content="IPA">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Agar.io IPA List">
+    <meta name="twitter:description" content="A collection of Agar.io iOS IPA files.">
+    <meta name="twitter:image" content="menuIcon.ico?v=1">
     <link rel="icon" type="image/x-icon" href="menuIcon.ico?v=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -83,7 +93,11 @@
             background-color: rgba(255,255,255,0.8);
             transition: all 0.3s;
         }
-        .search-box:focus { outline: none; box-shadow: 0 0 10px var(--accent-color); }
+
+        .search-box:focus {
+            outline: none;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
 
         table {
             width: 100%;
@@ -109,18 +123,39 @@
             border-color: var(--accent-color);
         }
 
-        td:first-child { border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
-        td:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px; text-align: right; }
+        td:first-child {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
 
-        .file-icon { color: var(--accent-color); font-size: 24px; margin-right: 20px; }
-        .file-info strong { font-size: 1.1em; display: block; }
-        .file-info span { font-size: 0.9em; opacity: 0.7; }
+        td:last-child {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            text-align: right;
+        }
+
+        .file-icon {
+            color: var(--accent-color);
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .file-info strong {
+            font-size: 1.1em;
+            display: block;
+        }
+
+        .file-info span {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
         
         .action-icon {
             color: var(--text-light);
             opacity: 0.5;
             transition: 0.3s;
         }
+
         .file-row:hover .action-icon {
             opacity: 1;
             color: var(--accent-color);
@@ -188,7 +223,11 @@
             font-size: 14px;
             cursor: pointer;
         }
-        .back-link:hover { opacity: 1; text-decoration: underline; }
+
+        .back-link:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
 
         body.dark {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
@@ -200,11 +239,26 @@
             border-color: var(--border-dark);
         }
 
-        body.dark .file-row td { background: rgba(44, 62, 80, 0.6); }
-        body.dark .file-row:hover td { background: rgba(44, 62, 80, 0.9); }
-        body.dark .search-box { background-color: var(--surface-dark); color: white; }
-        body.dark .action-icon { color: white; }
-        body.dark .back-link { color: white; }
+        body.dark .file-row td {
+            background: rgba(44, 62, 80, 0.6);
+        }
+
+        body.dark .file-row:hover td {
+            background: rgba(44, 62, 80, 0.9);
+        }
+
+        body.dark .search-box {
+            background-color: var(--surface-dark);
+            color: white;
+        }
+
+        body.dark .action-icon {
+            color: white;
+        }
+
+        body.dark .back-link {
+            color: white;
+        }
 
         .toggle-btn {
             position: absolute;
@@ -219,13 +273,33 @@
             font-size: 12px;
             z-index: 100;
         }
-        .toggle-btn:hover { background: rgba(0,0,0,0.4); }
+
+        .toggle-btn:hover {
+            background: rgba(0,0,0,0.4);
+        }
 
         @media (max-width: 768px) {
-            .container { margin: 10px auto; width: 90%; padding: 20px; }
-            .header-row { flex-direction: column; align-items: flex-start; }
-            .search-box { width: 100%; margin-top: 15px; }
-            .main-download-btn { width: 100%; box-sizing: border-box; padding: 15px 0; }
+            .container {
+                margin: 10px auto;
+                width: 90%;
+                padding: 20px;
+            }
+
+            .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-box {
+                width: 100%;
+                margin-top: 15px;
+            }
+
+            .main-download-btn {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 15px 0;
+            }
         }
     </style>
 </head>
@@ -233,7 +307,6 @@
 <button class="toggle-btn" onclick="toggleDarkMode()">☾ Dark Mode</button>
 
 <div class="container">
-    
     <div id="repo-view" class="view-section">
         <div class="header-row">
             <h1>IPA <i class="fas fa-cubes" style="color: var(--accent-color);"></i></h1>
@@ -241,7 +314,7 @@
         </div>
         <table>
             <tbody id="file-table-body">
-                </tbody>
+            </tbody>
         </table>
         <div style="text-align: center; margin-top: 20px; opacity: 0.6; font-size: 0.8em;">
             Select a file to view download options.
@@ -260,23 +333,27 @@
             
             <br>
             <div onclick="goHome()" class="back-link">
-                <i class="fas fa-arrow-left"></i> Return to
+                <i class="fas fa-arrow-left"></i> Return to List
             </div>
         </div>
     </div>
-
 </div>
 
 <script>
     const files = [
-        { name: "coinskins.ipa", displayName: "Agar.io CoinSkins v2.30.8", description: "Hi", url: "https://github.com/gaoccl/agario/releases/download/io/coinskins.ipa" },];
+        { name: "coinskins.ipa", displayName: "Agar.io CoinSkins v2.30.8", description: "CoinSkins IPA for Agar.io v2.30.8 (iOS)", url: "https://github.com/gaoccl/agario/releases/download/io/coinskins.ipa" }
+    ];
+
+    function applyMetaFromFile(fileData) {
+        document.title = fileData.displayName;
+        const descMeta = document.querySelector('meta[name="description"]');
+        if (descMeta) descMeta.setAttribute("content", fileData.description);
+    }
 
     function handleRouting() {
         const urlParams = new URLSearchParams(window.location.search);
         const fileKey = urlParams.get('file');
-
         document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-
         if (fileKey) {
             loadDownloadPage(fileKey);
         } else {
@@ -286,13 +363,13 @@
 
     function goToDownload(fileName) {
         const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?file=' + encodeURIComponent(fileName);
-        window.history.pushState({path: newUrl}, '', newUrl);
+        window.history.pushState({ path: newUrl }, '', newUrl);
         handleRouting();
     }
 
     function goHome() {
         const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-        window.history.pushState({path: newUrl}, '', newUrl);
+        window.history.pushState({ path: newUrl }, '', newUrl);
         handleRouting();
     }
 
@@ -301,12 +378,10 @@
     function renderTable() {
         const tbody = document.getElementById("file-table-body");
         tbody.innerHTML = "";
-
         files.forEach(file => {
             const tr = document.createElement("tr");
             tr.className = "file-row";
             tr.onclick = () => goToDownload(file.name);
-
             tr.innerHTML = `
                 <td>
                     <div style="display: flex; align-items: center;">
@@ -328,16 +403,14 @@
     function loadDownloadPage(fileName) {
         const fileData = files.find(f => f.name === fileName);
         const dlView = document.getElementById('download-view');
-        
         if (!fileData) {
             goHome();
             return;
         }
-
         document.getElementById('dl-filename').textContent = fileData.displayName;
         document.getElementById('dl-desc').textContent = fileData.description + " (" + fileData.name + ")";
         document.getElementById('dl-btn').href = fileData.url;
-        
+        applyMetaFromFile(fileData);
         dlView.classList.add('active');
     }
 
@@ -353,7 +426,7 @@
         document.querySelector(".toggle-btn").innerHTML = '☀︎ Light Mode';
     }
 
-    document.getElementById("search").addEventListener("input", function() {
+    document.getElementById("search").addEventListener("input", function () {
         const query = this.value.toLowerCase();
         document.querySelectorAll(".file-row").forEach(tr => {
             tr.style.display = tr.innerText.toLowerCase().includes(query) ? "" : "none";
@@ -361,6 +434,9 @@
     });
 
     renderTable();
+    if (files.length > 0) {
+        applyMetaFromFile(files[0]);
+    }
     handleRouting();
 </script>
 </body>
