@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium IPA Repository</title>
+    <link rel="icon" type="image/x-icon" href="menuIcon.ico?v=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --accent-color: #00bcd4;
+            --accent-dark: #008ba3;
+            --background-light: #e0f7fa;
+            --surface-light: rgba(255, 255, 255, 0.75);
+            --surface-dark: rgba(30, 40, 50, 0.75);
+            --text-light: #1f2a38;
+            --text-dark: #ecf0f1;
+            --border-light: rgba(255, 255, 255, 0.3);
+            --border-dark: rgba(255, 255, 255, 0.1);
+            --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #a8dadc 0%, #457b9d 100%);
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: var(--text-light);
+            transition: background 0.4s, color 0.4s;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1000px;
+            margin: 60px auto;
+            background: var(--surface-light);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            box-shadow: var(--shadow-glass);
+            padding: 40px;
+            transition: all 0.4s;
+            position: relative;
+        }
+
+        .view-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .search-box {
+            font-size: 16px;
+            padding: 12px 20px;
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            min-width: 250px;
+            background-color: rgba(255,255,255,0.8);
+            transition: all 0.3s;
+        }
+        .search-box:focus { outline: none; box-shadow: 0 0 10px var(--accent-color); }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .file-row {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .file-row td {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 20px;
+            border: 1px solid transparent;
+        }
+
+        .file-row:hover td {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.01);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--accent-color);
+        }
+
+        td:first-child { border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
+        td:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px; text-align: right; }
+
+        .file-icon { color: var(--accent-color); font-size: 24px; margin-right: 20px; }
+        .file-info strong { font-size: 1.1em; display: block; }
+        .file-info span { font-size: 0.9em; opacity: 0.7; }
+        
+        .action-icon {
+            color: var(--text-light);
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+        .file-row:hover .action-icon {
+            opacity: 1;
+            color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        .download-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .file-preview-icon {
+            font-size: 80px;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            text-shadow: 0 5px 15px rgba(0,188,212,0.3);
+        }
+
+        .download-filename {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            word-break: break-all;
+        }
+
+        .download-desc {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .main-download-btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 18px 60px;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(0, 188, 212, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .main-download-btn:hover {
+            background: var(--accent-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 188, 212, 0.5);
+        }
+
+        .main-download-btn:active {
+            transform: translateY(1px);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: var(--text-light);
+            text-decoration: none;
+            opacity: 0.7;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .back-link:hover { opacity: 1; text-decoration: underline; }
+
+        body.dark {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: var(--text-dark);
+        }
+        
+        body.dark .container {
+            background: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        body.dark .file-row td { background: rgba(44, 62, 80, 0.6); }
+        body.dark .file-row:hover td { background: rgba(44, 62, 80, 0.9); }
+        body.dark .search-box { background-color: var(--surface-dark); color: white; }
+        body.dark .action-icon { color: white; }
+        body.dark .back-link { color: white; }
+
+        .toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 12px;
+            background: rgba(0,0,0,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 100;
+        }
+        .toggle-btn:hover { background: rgba(0,0,0,0.4); }
+
+        @media (max-width: 768px) {
+            .container { margin: 10px auto; width: 90%; padding: 20px; }
+            .header-row { flex-direction: column; align-items: flex-start; }
+            .search-box { width: 100%; margin-top: 15px; }
+            .main-download-btn { width: 100%; box-sizing: border-box; padding: 15px 0; }
+        }
+    </style>
+</head>
+<body>
+<button class="toggle-btn" onclick="toggleDarkMode()">☾ Dark Mode</button>
+
+<div class="container">
+    
+    <div id="repo-view" class="view-section">
+        <div class="header-row">
+            <h1>IPA Repository <i class="fas fa-cubes" style="color: var(--accent-color);"></i></h1>
+            <input type="text" id="search" class="search-box" placeholder="Search files...">
+        </div>
+        <table>
+            <tbody id="file-table-body">
+                </tbody>
+        </table>
+        <div style="text-align: center; margin-top: 20px; opacity: 0.6; font-size: 0.8em;">
+            Select a file to view download options.
+        </div>
+    </div>
+
+    <div id="download-view" class="view-section">
+        <div class="download-card">
+            <i class="fas fa-file-archive file-preview-icon"></i>
+            <div id="dl-filename" class="download-filename">Loading...</div>
+            <div id="dl-desc" class="download-desc">Checking file status...</div>
+            
+            <a id="dl-btn" href="#" class="main-download-btn">
+                DOWNLOAD <i class="fas fa-download" style="margin-left: 10px;"></i>
+            </a>
+            
+            <br>
+            <div onclick="goHome()" class="back-link">
+                <i class="fas fa-arrow-left"></i> Return to Repository
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const files = [
+        { name: "agar.io_2.30.5_kahraba+myu.ipa", displayName: "Agar.io v2.30.5", description: "Kahraba Mod + Custom Features", url: "https://github.com/konatsu123/agar.io/releases/download/%E3%81%82/agar.io_2.30.5_kahraba+myu.ipa" },
+        { name: "agar.io_2.30.5_kahraba+shark+myu.ipa", displayName: "Agar.io v2.30.5 - Pro Bundle", description: "Kahraba Mod + Shark v1.7.8 + Custom Features", url: "https://github.com/konatsu123/agar.io/releases/download/%E3%81%82/agar.io_2.30.5_kahraba+shark+myu.ipa" },
+        { name: "agar.io_2.30.5_coinskins.ipa", displayName: "Agar.io v2.30.5 - Coin Skins", description: "All Coin Skins Unlocked Version", url: "https://github.com/konatsu123/agar.io/releases/download/%E3%81%82/agar.io_2.30.5_coinskins.ipa" },
+        { name: "agar.io_2.30.5_ctrl+mod.ipa", displayName: "Agar.io v2.30.5 - Cursor Fix", description: "Enhanced Cursor Control + Mod", url: "https://github.com/konatsu123/agar.io/releases/download/%E3%81%82/agar.io_2.30.5_ctrl+mod.ipa" },
+        { name: "agar.io_2.30.5_ctrl1.2+mod.ipa", displayName: "Agar.io v2.30.5 - Classic Hold", description: "Cursor Fix v1.2 + Classic Hold Split", url: "https://github.com/konatsu123/agar.io/releases/download/%E3%81%82/agar.io_2.30.5_ctrl1.2+mod.ipa" },
+    ];
+
+    function handleRouting() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const fileKey = urlParams.get('file');
+
+        document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+
+        if (fileKey) {
+            loadDownloadPage(fileKey);
+        } else {
+            document.getElementById('repo-view').classList.add('active');
+        }
+    }
+
+    function goToDownload(fileName) {
+        const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?file=' + encodeURIComponent(fileName);
+        window.history.pushState({path: newUrl}, '', newUrl);
+        handleRouting();
+    }
+
+    function goHome() {
+        const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.pushState({path: newUrl}, '', newUrl);
+        handleRouting();
+    }
+
+    window.onpopstate = handleRouting;
+
+    function renderTable() {
+        const tbody = document.getElementById("file-table-body");
+        tbody.innerHTML = "";
+
+        files.forEach(file => {
+            const tr = document.createElement("tr");
+            tr.className = "file-row";
+            tr.onclick = () => goToDownload(file.name);
+
+            tr.innerHTML = `
+                <td>
+                    <div style="display: flex; align-items: center;">
+                        <i class="fas fa-file-invoice file-icon"></i>
+                        <div class="file-info">
+                            <strong>${file.displayName}</strong>
+                            <span>${file.description}</span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <i class="fas fa-chevron-right action-icon"></i>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function loadDownloadPage(fileName) {
+        const fileData = files.find(f => f.name === fileName);
+        const dlView = document.getElementById('download-view');
+        
+        if (!fileData) {
+            goHome();
+            return;
+        }
+
+        document.getElementById('dl-filename').textContent = fileData.displayName;
+        document.getElementById('dl-desc').textContent = fileData.description + " (" + fileData.name + ")";
+        document.getElementById('dl-btn').href = fileData.url;
+        
+        dlView.classList.add('active');
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark");
+        const isDark = document.body.classList.contains("dark");
+        localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
+        document.querySelector(".toggle-btn").innerHTML = isDark ? '☀︎ Light Mode' : '☾ Dark Mode';
+    }
+
+    if (localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark");
+        document.querySelector(".toggle-btn").innerHTML = '☀︎ Light Mode';
+    }
+
+    document.getElementById("search").addEventListener("input", function() {
+        const query = this.value.toLowerCase();
+        document.querySelectorAll(".file-row").forEach(tr => {
+            tr.style.display = tr.innerText.toLowerCase().includes(query) ? "" : "none";
+        });
+    });
+
+    renderTable();
+    handleRouting();
+</script>
+</body>
+</html>
